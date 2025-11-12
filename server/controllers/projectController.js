@@ -42,6 +42,7 @@ exports.createProject = async (req, res) => {
 
     const project = new Project({
       ...req.body,
+      owner: req.user.id,
       imageCover: req.imageCoverUrl,
       carouselImages: images,
     });
@@ -71,6 +72,10 @@ exports.updateProject = async (req, res) => {
     const project = await Project.findById(req.params.id);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
+    }
+
+    if (project.owner.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Forbidden: not your project" });
     }
 
     const deleteImageFile = async (url) => {
@@ -116,13 +121,13 @@ exports.updateProject = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
   try {
-    if (req.body._id) {
-      delete req.body._id;
-    }
-
     const project = await Project.findById(req.params.id);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
+    }
+
+    if (project.owner.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Forbidden: not your project" });
     }
 
     const deleteImageFile = async (url) => {

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config();
 
+const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 // app.use("/api/skills", skillRoutes);
 // app.use("/api/categories", categoryRoutes);
