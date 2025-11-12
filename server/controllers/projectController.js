@@ -1,4 +1,6 @@
 const Project = require("../models/Project");
+const fs = require("fs");
+const path = require("path");
 
 exports.getAllProjects = async (req, res) => {
   try {
@@ -62,13 +64,38 @@ exports.updateProject = async (req, res) => {
     const images = req.carouselImageUrls || [];
     const imageCover = req.imageCoverUrl || null;
 
+    if (req.body._id) {
+      delete req.body._id;
+    }
+
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    const deleteImageFile = async (url) => {
+      const filename = url.split("/images/")[1];
+      const filepath = path.join(__dirname, "..", "images", filename);
+      try {
+        await fs.promises.unlink(filepath);
+      } catch (_) {
+        // Fichier introuvable ou déjà supprimé → on ignore
+      }
+    };
+
+    // Si nouvelles images, on supprime les anciennes
+    if (images.length > 0 && project.carouselImages?.length > 0) {
+      await Promise.all(project.carouselImages.map(deleteImageFile));
+    }
+
+    if (imageCover && project.imageCover) {
+      await deleteImageFile(project.imageCover);
+    }
+
+    // Mise à jour des images dans le corps
     if (images.length > 0) {
       req.body.carouselImages = images;
       req.body.imageCover = imageCover;
-    }
-
-    if (req.body._id) {
-      delete req.body._id;
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
@@ -77,16 +104,49 @@ exports.updateProject = async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    if (!updatedProject) {
-      return res.status(404).json({ error: "Project not found" });
-    }
-
-    res
+    return res
       .status(200)
       .json({ message: "Project updated", project: updatedProject });
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ error: "Error updating project", details: error.message });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  try {
+    if (req.body._id) {
+      delete req.body._id;
+    }
+
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    const deleteImageFile = async (url) => {
+      const filename = url.split("/images/")[1];
+      const filepath = path.join(__dirname, "..", "images", filename);
+      try {
+        await fs.promises.unlink(filepath);
+      } catch (_) {
+        // Fichier déjà supprimé ou introuvable → on ignore
+      }
+    };
+
+    if (project.imageCover) await deleteImageFile(project.imageCover);
+    if (project.carouselImages?.length > 0) {
+      await Promise.all(project.carouselImages.map(deleteImageFile));
+    }
+
+    await Project.deleteOne({ _id: req.params.id });
+
+    return res.status(200).json({ message: "Project deleted" });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Error deleting project",
+      details: error.message,
+    });
   }
 };

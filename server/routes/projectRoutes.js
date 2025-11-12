@@ -7,5 +7,6 @@ router.get("/", projectController.getAllProjects);
 router.get("/:id", projectController.getOneProject);
 router.post("/", imageUpload, projectController.createProject);
 router.put("/:id", imageUpload, projectController.updateProject);
+router.delete("/:id", projectController.deleteProject);
 
 module.exports = router;
