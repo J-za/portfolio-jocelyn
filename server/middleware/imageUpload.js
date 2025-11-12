@@ -1,0 +1,57 @@
+const multer = require("multer");
+const sharp = require("sharp");
+const path = require("path");
+
+const MIME_TYPES = {
+  "image/jpg": "jpg",
+  "image/jpeg": "jpeg",
+  "image/png": "png",
+};
+
+// Vérification du MIME_TYPES et stockage en mémoire
+const fileFilter = (req, file, cb) => {
+  if (MIME_TYPES[file.mimetype]) {
+    cb(null, true); // type autorisé
+  } else {
+    cb(new Error("Invalid file type")); // rejeté
+  }
+};
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter,
+}).single("image");
+
+// Middleware combiné : multer + sharp
+module.exports = (req, res, next) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({ message: err.message });
+    }
+
+    if (!req.file) {
+      return next();
+    }
+
+    const originalName = req.file.originalname
+      .split(" ")
+      .join("_")
+      .split(".")[0];
+    const filename = `compressed_${originalName}_${Date.now()}.webp`;
+    const filepath = path.join("images", filename);
+
+    sharp(req.file.buffer)
+      .resize(463, 595)
+      .webp({ quality: 80 })
+      .toFile(filepath)
+      .then(() => {
+        req.file.imageUrl = `${req.protocol}://${req.get(
+          "host"
+        )}/images/${filename}`;
+        next();
+      })
+      .catch((error) => {
+        return res.status(500).json({ message: error.message });
+      });
+  });
+};

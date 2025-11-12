@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config();
 
+const projectRoutes = require("./routes/projectRoutes");
+const skillRoutes = require("./routes/skillRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -24,5 +28,10 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use("/api/projects", projectRoutes);
+app.use("/api/skills", skillRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;
