@@ -30,8 +30,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/projects", projectRoutes);
-app.use("/api/skills", skillRoutes);
-app.use("/api/categories", categoryRoutes);
+// app.use("/api/skills", skillRoutes);
+// app.use("/api/categories", categoryRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;

@@ -26,7 +26,9 @@ exports.getOneProject = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
-    if (!req.file || !req.file.imageUrl) {
+    const images = req.carouselImageUrls || [];
+
+    if (images.length === 0 || !req.imageCoverUrl) {
       return res
         .status(400)
         .json({ error: "Main image is required in request payload" });
@@ -38,10 +40,12 @@ exports.createProject = async (req, res) => {
 
     const project = new Project({
       ...req.body,
-      imageCover: req.file.imageUrl,
+      imageCover: req.imageCoverUrl,
+      carouselImages: images,
     });
 
     await project.save();
+
     return res
       .status(201)
       .json({ message: "Project successfully created", project });

@@ -8,50 +8,61 @@ const MIME_TYPES = {
   "image/png": "png",
 };
 
-// Vérification du MIME_TYPES et stockage en mémoire
 const fileFilter = (req, file, cb) => {
   if (MIME_TYPES[file.mimetype]) {
-    cb(null, true); // type autorisé
+    cb(null, true);
   } else {
-    cb(new Error("Invalid file type")); // rejeté
+    cb(new Error("Invalid file type"));
   }
 };
 
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter,
-}).single("image");
+}).fields([{ name: "carousel", maxCount: 5 }]);
 
-// Middleware combiné : multer + sharp
 module.exports = (req, res, next) => {
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
+      console.error("Erreur multer:", err.message);
       return res.status(400).json({ message: err.message });
     }
 
-    if (!req.file) {
-      return next();
+    const imageUrls = [];
+
+    if (!req.files?.carousel || req.files.carousel.length === 0) {
+      console.warn("Aucune image reçue dans 'carousel'");
+      return res
+        .status(400)
+        .json({ error: "At least one image is required in request payload" });
     }
 
-    const originalName = req.file.originalname
-      .split(" ")
-      .join("_")
-      .split(".")[0];
-    const filename = `compressed_${originalName}_${Date.now()}.webp`;
-    const filepath = path.join("images", filename);
+    try {
+      for (const [index, file] of req.files.carousel.entries()) {
+        const originalName = file.originalname
+          .split(" ")
+          .join("_")
+          .split(".")[0];
+        const filename = `carousel_${originalName}_${Date.now()}_${index}.webp`;
+        const filepath = path.join("images", filename);
 
-    sharp(req.file.buffer)
-      .resize(463, 595)
-      .webp({ quality: 80 })
-      .toFile(filepath)
-      .then(() => {
-        req.file.imageUrl = `${req.protocol}://${req.get(
+        await sharp(file.buffer)
+          .resize(800, 600)
+          .webp({ quality: 80 })
+          .toFile(filepath);
+
+        const imageUrl = `${req.protocol}://${req.get(
           "host"
         )}/images/${filename}`;
-        next();
-      })
-      .catch((error) => {
-        return res.status(500).json({ message: error.message });
-      });
+        imageUrls.push(imageUrl);
+      }
+
+      req.carouselImageUrls = imageUrls;
+      req.imageCoverUrl = imageUrls[0];
+
+      next();
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
   });
 };
