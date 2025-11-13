@@ -182,8 +182,7 @@ paths:
                 logo:
                   type: string
                   format: binary
-                svgContent:
-                  type: string
+                  description: Fichier SVG du logo
       responses:
         "201":
           description: Skill créé
@@ -191,6 +190,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Skill"
+        "400":
+          description: Fichier SVG requis
 
   /skills/{id}:
     put:
@@ -218,8 +219,7 @@ paths:
                 logo:
                   type: string
                   format: binary
-                svgContent:
-                  type: string
+                  description: Nouveau fichier SVG
       responses:
         "200":
           description: Skill mis à jour

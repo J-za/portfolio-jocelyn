@@ -4,7 +4,6 @@ const SkillSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     logoUrl: { type: String },
-    svgContent: { type: String },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
