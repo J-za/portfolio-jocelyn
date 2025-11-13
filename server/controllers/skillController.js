@@ -4,7 +4,7 @@ const path = require("path");
 
 exports.getAllSkills = async (req, res) => {
   try {
-    const skills = await Skill.find();
+    const skills = await Skill.find().populate("category");
     return res.status(200).json(skills);
   } catch (error) {
     return res
