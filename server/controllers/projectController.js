@@ -74,9 +74,9 @@ exports.updateProject = async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user.id) {
-      return res.status(403).json({ error: "Forbidden: not your project" });
-    }
+    // if (project.owner.toString() !== req.user.id) {
+    //   return res.status(403).json({ error: "Forbidden: not your project" });
+    // }
 
     const deleteImageFile = async (url) => {
       const filename = url.split("/images/")[1];
@@ -126,9 +126,9 @@ exports.deleteProject = async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user.id) {
-      return res.status(403).json({ error: "Forbidden: not your project" });
-    }
+    // if (project.owner.toString() !== req.user.id) {
+    //   return res.status(403).json({ error: "Forbidden: not your project" });
+    // }
 
     const deleteImageFile = async (url) => {
       const filename = url.split("/images/")[1];
