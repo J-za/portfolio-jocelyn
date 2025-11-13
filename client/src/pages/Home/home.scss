@@ -1,0 +1,49 @@
+@use "../../styles/variables.scss" as *;
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-primary;
+  padding: 3em 12em;
+
+  h1 {
+    font-size: 4em;
+    color: $color-light;
+    text-align: center;
+    font-weight: 800;
+    margin: 0;
+
+    .accent {
+      color: $color-accent;
+    }
+  }
+
+  p {
+    color: $color-light;
+    font-size: $font-size-dekstop-written1;
+    text-align: center;
+    margin: 0 0 2em 0;
+  }
+
+  .button-content {
+    display: flex;
+    gap: 6em;
+    margin-bottom: 2em;
+    button {
+      all: unset;
+      background-color: $color-light;
+      border-radius: 0.625em;
+      padding: 0.5em 2em;
+      font-weight: 800;
+      font-size: $font-size-dekstop-written2;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.06);
+      }
+    }
+  }
+}

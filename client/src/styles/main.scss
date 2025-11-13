@@ -1,4 +1,10 @@
+@use "../styles/variables.scss" as *;
+
 body,
 html {
   margin: 0;
+}
+
+main {
+  font-family: $main-police;
 }
