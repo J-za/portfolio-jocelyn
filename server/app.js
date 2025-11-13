@@ -8,6 +8,9 @@ const projectRoutes = require("./routes/projectRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./config/swagger");
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -35,5 +38,6 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;

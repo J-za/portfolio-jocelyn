@@ -1,0 +1,355 @@
+openapi: 3.0.0
+info:
+  title: Portfolio API
+  version: 1.0.0
+  description: API pour gérer les skills, catégories et projets du portfolio
+
+servers:
+  - url: http://localhost:4000/api
+    description: Serveur local
+
+tags:
+  - name: Skills
+    description: Gestion des compétences
+  - name: Categories
+    description: Gestion des catégories
+  - name: Projects
+    description: Gestion des projets
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Skill:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        logoUrl:
+          type: string
+        svgContent:
+          type: string
+        category:
+          type: string
+        owner:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Category:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Project:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        owner:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+paths:
+  /skills:
+    get:
+      summary: Récupère tous les skills
+      tags: [Skills]
+      responses:
+        "200":
+          description: Liste des skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Skill"
+
+    post:
+      summary: Crée un nouveau skill
+      tags: [Skills]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                logo:
+                  type: string
+                  format: binary
+                svgContent:
+                  type: string
+      responses:
+        "201":
+          description: Skill créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+
+  /skills/{id}:
+    put:
+      summary: Met à jour un skill
+      tags: [Skills]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                logo:
+                  type: string
+                  format: binary
+                svgContent:
+                  type: string
+      responses:
+        "200":
+          description: Skill mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "404":
+          description: Skill non trouvé
+
+    delete:
+      summary: Supprime un skill
+      tags: [Skills]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Skill supprimé
+        "404":
+          description: Skill non trouvé
+
+  /categories:
+    get:
+      summary: Récupère toutes les catégories
+      tags: [Categories]
+      responses:
+        "200":
+          description: Liste des catégories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+    post:
+      summary: Crée une nouvelle catégorie
+      tags: [Categories]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        "201":
+          description: Catégorie créée
+
+  /categories/{id}:
+    put:
+      summary: Met à jour une catégorie
+      tags: [Categories]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        "200":
+          description: Catégorie mise à jour
+        "404":
+          description: Catégorie non trouvée
+
+    delete:
+      summary: Supprime une catégorie
+      tags: [Categories]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Catégorie supprimée
+        "404":
+          description: Catégorie non trouvée
+
+  /projects:
+    get:
+      summary: Récupère tous les projets
+      tags: [Projects]
+      responses:
+        "200":
+          description: Liste des projets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+
+    post:
+      summary: Crée un nouveau projet
+      tags: [Projects]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Projet créé
+
+  /projects/{id}:
+    get:
+      summary: Récupère un projet par ID
+      tags: [Projects]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Projet trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          description: Projet non trouvé
+
+    put:
+      summary: Met à jour un projet
+      tags: [Projects]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Projet mis à jour
+        "404":
+          description: Projet non trouvé
+
+    delete:
+      summary: Supprime un projet
+      tags: [Projects]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Projet supprimé
+        "404":
+          description: Projet non trouvé
