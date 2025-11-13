@@ -9,6 +9,8 @@ servers:
     description: Serveur local
 
 tags:
+  - name: Auth
+    description: Authentification des utilisateurs
   - name: Skills
     description: Gestion des compétences
   - name: Categories
@@ -69,7 +71,15 @@ components:
           type: string
         description:
           type: string
-        imageUrl:
+        imageCover:
+          type: string
+        carouselImages:
+          type: string
+        tags:
+          type: string
+        githubLink:
+          type: string
+        demoLink:
           type: string
         owner:
           type: string
@@ -81,6 +91,64 @@ components:
           format: date-time
 
 paths:
+  /auth/register:
+    post:
+      summary: Inscrit un nouvel utilisateur
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: Utilisateur créé
+        "400":
+          description: Erreur de validation
+
+  /auth/login:
+    post:
+      summary: Connecte un utilisateur existant
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        "401":
+          description: Identifiants invalides
+
   /skills:
     get:
       summary: Récupère tous les skills
@@ -274,17 +342,33 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - title
+                - description
               properties:
                 title:
                   type: string
                 description:
                   type: string
-                image:
+                imageCover:
                   type: string
                   format: binary
+                carouselImages:
+                  type: string
+                  format: binary
+                tags:
+                  type: string
+                githubLink:
+                  type: string
+                demoLink:
+                  type: string
       responses:
         "201":
           description: Projet créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
 
   /projects/{id}:
     get:
@@ -328,12 +412,25 @@ paths:
                   type: string
                 description:
                   type: string
-                image:
+                imageCover:
                   type: string
                   format: binary
+                carouselImages:
+                  type: string
+                  format: binary
+                tags:
+                  type: string
+                githubLink:
+                  type: string
+                demoLink:
+                  type: string
       responses:
         "200":
           description: Projet mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
         "404":
           description: Projet non trouvé
 
