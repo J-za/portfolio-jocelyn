@@ -21,7 +21,7 @@
     }
   }
 
-  p {
+  h2 {
     color: $color-light;
     font-size: $font-size-dekstop-written1;
     text-align: center;
@@ -46,4 +46,11 @@
       }
     }
   }
+}
+
+.highlight-content {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin: 2em 0;
 }
