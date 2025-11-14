@@ -40,7 +40,17 @@ function Home() {
         </h2>
         <div className="button-content">
           <button>Mes projets</button>
-          <button>Me contacter</button>
+          <button
+            className="hero-button"
+            onClick={() => {
+              const element = document.getElementById("contact");
+              if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Me contacter
+          </button>
         </div>
       </section>
       <section className="highlight-content">
