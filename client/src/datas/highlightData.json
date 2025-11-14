@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "Icon-Code",
+    "title": "Architecture solide",
+    "description": "Un code structuré évolutif et pensé pour durer"
+  },
+  {
+    "icon": "Icon-Target",
+    "title": "Vision produit",
+    "description": "Une approche issue de mon expérience en tant que Product Owner"
+  },
+  {
+    "icon": "Icon-Flash",
+    "title": "Performance web",
+    "description": "Des sites rapides, optimisés et bien référencés"
+  }
+]

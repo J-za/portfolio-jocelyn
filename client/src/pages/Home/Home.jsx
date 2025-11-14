@@ -2,7 +2,14 @@ import HighlightBox from "../../components/HighlightBox/HighlightBox";
 import IconCode from "../../assets/Icon-Code.svg?react";
 import IconTarget from "../../assets/ri_target-fill.svg?react";
 import IconFlash from "../../assets/Icon-Flash.svg?react";
+import data from "../../datas/highlightData.json";
 import "./home.scss";
+
+const iconMap = {
+  "Icon-Code": <IconCode className="icon" />,
+  "Icon-Target": <IconTarget className="icon" />,
+  "Icon-Flash": <IconFlash className="icon" />,
+};
 
 function Home() {
   return (
@@ -22,21 +29,14 @@ function Home() {
         </div>
       </section>
       <section className="highlight-content">
-        <HighlightBox
-          icon={<IconCode className="icon" />}
-          title="Architecture solide"
-          description="Un code structuré évolutif et pensé pour durer"
-        />
-        <HighlightBox
-          icon={<IconTarget className="icon" />}
-          title="Vision produit"
-          description="Une approche issue de mon expérience en tant que Product Owner"
-        />
-        <HighlightBox
-          icon={<IconFlash className="icon" />}
-          title="Perfomance web"
-          description="Des sites rapides, optimisés et bien référencés"
-        />
+        {data.map((item, index) => (
+          <HighlightBox
+            key={index}
+            icon={iconMap[item.icon]}
+            title={item.title}
+            description={item.description}
+          />
+        ))}
       </section>
     </>
   );
