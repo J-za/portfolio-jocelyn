@@ -1,3 +1,5 @@
+import { useLocation } from "react-router";
+import { useEffect } from "react";
 import HighlightBox from "../../components/HighlightBox/HighlightBox";
 import IconCode from "../../assets/Icon-Code.svg?react";
 import IconTarget from "../../assets/ri_target-fill.svg?react";
@@ -13,6 +15,18 @@ const iconMap = {
 };
 
 function Home() {
+  const location = useLocation();
+
+  //Permet de gérer le lien vers contact depuis une autre page
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <>
       <section className="hero-content">
@@ -39,7 +53,7 @@ function Home() {
           />
         ))}
       </section>
-      <section className="form-content">
+      <section id="contact" className="form-content">
         <ContactForm />
       </section>
     </>

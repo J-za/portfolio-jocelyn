@@ -10,14 +10,14 @@ function Footer() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <GitHubIcon classname="icon" />
+        <GitHubIcon className="icon" />
       </a>
       <a
         href="https://www.linkedin.com/in/jocelyn-zarrouk"
         target="_blank"
         rel=""
       >
-        <LinkedInIcon classname="icon" />
+        <LinkedInIcon className="icon" />
       </a>
     </footer>
   );
