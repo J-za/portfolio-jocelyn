@@ -4,6 +4,7 @@ import IconTarget from "../../assets/ri_target-fill.svg?react";
 import IconFlash from "../../assets/Icon-Flash.svg?react";
 import data from "../../datas/highlightData.json";
 import "./home.scss";
+import ContactForm from "../../components/ContactForm/ContactForm";
 
 const iconMap = {
   "Icon-Code": <IconCode className="icon" />,
@@ -37,6 +38,9 @@ function Home() {
             description={item.description}
           />
         ))}
+      </section>
+      <section className="form-content">
+        <ContactForm />
       </section>
     </>
   );
