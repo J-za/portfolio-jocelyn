@@ -19,6 +19,17 @@ h2 {
   margin: 0 auto;
   width: 100%;
 
+  .error {
+    display: block; // occupe toute la largeur sous l’input
+    margin-top: 0.25rem; // petit espace avec l’input
+    font-size: 0.85rem; // légèrement plus petit que le texte normal
+    font-weight: 500;
+    color: #d9534f; // rouge accessible (Bootstrap-like)
+
+    // Accessibilité visuelle
+    line-height: 1.4;
+  }
+
   .visually-hidden {
     position: absolute;
     width: 1px;
@@ -31,28 +42,34 @@ h2 {
     border: 0;
   }
 
-  input {
-    padding: 0.75em 1em;
-    border-radius: 0.3em;
-    border: none;
-    font-size: 1em;
-  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
 
-  textarea {
-    padding: 0.75em 1em;
-    border-radius: 0.3em;
-    border: none;
-    font-size: 1em;
-    resize: vertical;
-    min-height: 100px;
-  }
+    input {
+      padding: 0.75em 1em;
+      border-radius: 0.3em;
+      border: none;
+      font-size: 1em;
+    }
 
-  input::placeholder,
-  textarea::placeholder {
-    color: #cccccc;
-    font-size: 1rem;
-    opacity: 1;
-    font-family: "Montserrat";
+    textarea {
+      padding: 0.75em 1em;
+      border-radius: 0.3em;
+      border: none;
+      font-size: 1em;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #cccccc;
+      font-size: 1rem;
+      opacity: 1;
+      font-family: "Montserrat";
+    }
   }
 
   button {
