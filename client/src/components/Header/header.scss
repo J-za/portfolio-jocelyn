@@ -13,7 +13,7 @@ header {
   height: 55px;
   background-color: $color-primary;
 
-  nav {
+  .nav-links {
     display: flex;
     gap: 4em;
 
@@ -27,6 +27,59 @@ header {
       &.active {
         color: $color-accent;
       }
+    }
+  }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: $color-light;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    &.active span:nth-child(2) {
+      opacity: 0;
+    }
+    &.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    // justify-content: right;
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: $color-primary;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5em;
+      padding: 2em 0;
+      display: none;
+
+      &.open {
+        display: flex;
+      }
+    }
+
+    .burger {
+      display: flex;
     }
   }
 }

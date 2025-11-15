@@ -11,7 +11,7 @@
   box-shadow: 0px 4px 4px 0px rgba($color: #d5c6ad, $alpha: 1);
 
   h1 {
-    font-size: 4em;
+    font-size: $fontsize-dekstop-h1;
     color: $color-light;
     text-align: center;
     font-weight: 800;
@@ -53,7 +53,7 @@
   display: flex;
   justify-content: center;
   gap: 1em;
-  margin: 4em 0;
+  margin: 4em 4em;
 }
 
 .form-content {
@@ -63,4 +63,45 @@
   background-color: $color-primary;
   box-shadow: 0px -4px 4px 0px rgba($color: #d5c6ad, $alpha: 1);
   padding: 3em 12em;
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    padding: 5em 6em 3em 6em;
+    h1 {
+      font-size: $fontsize-tablet-h1;
+    }
+
+    h2 {
+      font-size: $font-size-tablet-h2;
+    }
+
+    .button-content {
+      button {
+        font-size: $font-size-tablet-written1;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 5em 1.5em 3em 1.5em;
+    h1 {
+      font-size: $fontsize-mobile-h1;
+    }
+
+    h2 {
+      font-size: $font-size-mobile-h2;
+      margin: 0;
+    }
+
+    .button-content {
+      flex-direction: column;
+      gap: 2em;
+      button {
+        font-size: $font-size-mobile-written2;
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import HighlightBox from "../../components/HighlightBox/HighlightBox";
 import IconCode from "../../assets/Icon-Code.svg?react";
 import IconTarget from "../../assets/ri_target-fill.svg?react";
