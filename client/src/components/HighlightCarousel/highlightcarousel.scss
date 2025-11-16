@@ -1,0 +1,172 @@
+@use "../../styles/variables.scss" as *;
+
+.highlight-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3em 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+
+  .highlight-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .highlight-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* masque la scrollbar mais garde le swipe sur mobile */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+
+    .highlight-slider::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .highlight-card {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: center;
+      box-sizing: border-box;
+      padding: 2em 1em;
+
+      .highlight-inner {
+        max-width: 320px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        background-color: $color-light;
+        border-radius: 1rem;
+        padding: 2rem;
+
+        h3 {
+          margin: 0;
+          color: $color-primary;
+          font-size: $font-size-dekstop-written1;
+          font-weight: 800;
+        }
+
+        p {
+          margin: 0;
+          font-size: $font-size-dekstop-written2;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .highlight-nav {
+    position: absolute;
+    top: 50%;
+    inset-inline: 0;
+    transform: translateY(-50%);
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    pointer-events: none;
+
+    .chevron {
+      pointer-events: all; /* réactive les clics sur les boutons */
+      background: none;
+      border: none;
+      padding: 1em;
+      cursor: pointer;
+      color: black;
+
+      svg {
+        width: 2em;
+        height: 2em;
+      }
+    }
+
+    .chevron-left {
+      margin-left: 0.5em;
+    }
+
+    .chevron-right {
+      margin-right: 0.5em;
+    }
+  }
+
+  .highlight-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.75em;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      margin: 0 5px;
+      cursor: pointer;
+
+      &.active {
+        background: $color-accent;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .highlight-carousel {
+    margin: 1em 0;
+    .highlight-slider {
+      .highlight-card {
+        .highlight-inner {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .highlight-carousel {
+    margin: 1em 0;
+    .highlight-slider {
+      .highlight-card {
+        .highlight-inner {
+          h3 {
+            margin: 0;
+            color: $color-primary;
+            font-size: $font-size-mobile-h2;
+            font-weight: 800;
+          }
+
+          p {
+            margin: 0;
+            font-size: $font-size-mobile-written1;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-carousel {
+    .highlight-nav {
+      display: none;
+    }
+  }
+}

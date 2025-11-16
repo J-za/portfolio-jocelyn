@@ -1,10 +1,11 @@
 import { useLocation } from "react-router";
-import { useEffect, useRef, useState } from "react";
-import HighlightBox from "../../components/HighlightBox/HighlightBox";
+import { useEffect } from "react";
+import HighlightCarousel from "../../components/HighlightCarousel/HighlightCarousel";
+import HighlightGrid from "../../components/HighlightGrid.jsx/HighlightGrid";
+import useIsMobileOrTablet from "../../hooks/useMobileOrTablet";
 import IconCode from "../../assets/Icon-Code.svg?react";
 import IconTarget from "../../assets/ri_target-fill.svg?react";
 import IconFlash from "../../assets/Icon-Flash.svg?react";
-import data from "../../datas/highlightData.json";
 import "./home.scss";
 import ContactForm from "../../components/ContactForm/ContactForm";
 
@@ -16,6 +17,7 @@ const iconMap = {
 
 function Home() {
   const location = useLocation();
+  const isMobileOrTablet = useIsMobileOrTablet();
 
   //Permet de gérer le lien vers contact depuis une autre page
   useEffect(() => {
@@ -54,14 +56,7 @@ function Home() {
         </div>
       </section>
       <section className="highlight-content">
-        {data.map((item, index) => (
-          <HighlightBox
-            key={index}
-            icon={iconMap[item.icon]}
-            title={item.title}
-            description={item.description}
-          />
-        ))}
+        {isMobileOrTablet ? <HighlightCarousel /> : <HighlightGrid />}
       </section>
       <section id="contact" className="form-content">
         <ContactForm />

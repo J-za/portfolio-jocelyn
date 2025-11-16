@@ -1,16 +1,12 @@
 @use "../../styles/variables.scss" as *;
 
 .highlight-card {
-  flex: 1 1 30%;
-  min-width: 250px;
-  max-width: 300px;
   padding: 2rem;
   border-radius: 1rem;
   background-color: $color-light;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  align-items: flex-start;
 
   h3 {
     margin: 0;

@@ -1,0 +1,17 @@
+.highlight-grid {
+  display: flex;
+  // flex-wrap: wrap;
+  justify-content: center;
+  gap: 2em;
+  margin: 4em auto;
+  padding: 0 1.5em;
+  max-width: 1200px;
+
+  .highlight-card {
+    flex: 1 1 calc(33.333% - 2em);
+    min-width: 250px;
+    max-width: 500px;
+    box-sizing: border-box;
+    align-items: flex-start;
+  }
+}
