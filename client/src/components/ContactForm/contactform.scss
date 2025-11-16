@@ -88,3 +88,20 @@ h2 {
     }
   }
 }
+
+@media (max-width: 1024px) {
+  h2 {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.4em;
+  }
+  .contact-form {
+    button {
+      font-size: 0.938em;
+    }
+  }
+}
