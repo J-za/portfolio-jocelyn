@@ -1,0 +1,70 @@
+@use "../../styles/variables.scss" as *;
+
+.story-box {
+  margin: auto;
+  padding: 0 2em;
+  background-color: $color-primary;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+
+  h2 {
+    font-size: $font-size-dekstop-h2;
+    color: $color-accent;
+    margin: 0;
+    margin-bottom: 1em;
+    font-weight: 800;
+  }
+
+  .intro {
+    font-size: $font-size-dekstop-written2;
+    color: $color-light;
+    margin: 0;
+  }
+
+  .points {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+
+    li {
+      font-size: $font-size-dekstop-written2;
+      color: $color-light;
+      margin: 0.3em 0;
+    }
+  }
+
+  .conclusion {
+    font-size: $font-size-dekstop-written2;
+    color: $color-light;
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .story-box {
+    h2 {
+      font-size: $font-size-tablet-h2;
+    }
+
+    .intro {
+      font-size: $font-size-tablet-written1;
+    }
+
+    .points {
+      li {
+        font-size: $font-size-tablet-written1;
+        color: $color-light;
+        margin: 0.3em 0;
+      }
+    }
+
+    .conclusion {
+      font-size: $font-size-tablet-written1;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+@use "../../styles/variables.scss" as *;
+
+.personnal-infos {
+  background-color: $color-primary;
+  color: $color-light;
+  padding: 5em 2em 3em 2em;
+  text-align: center;
+
+  h1 {
+    font-size: $font-size-dekstop-h2;
+    color: $color-light;
+    margin-bottom: 2.5em;
+    font-weight: 400;
+  }
+
+  .infos-content {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    align-items: center;
+
+    .img-content {
+      width: 100%;
+      max-width: 25em;
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.313em;
+        box-shadow: 8px 8px 8px 5px rgba($color: #000000, $alpha: 0.25);
+      }
+    }
+
+    .story-carousel {
+      max-width: 30em;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .personnal-infos {
+    h1 {
+      font-size: 2em;
+    }
+
+    .infos-content {
+      gap: 2em;
+
+      .img-content {
+        max-width: 20em;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .personnal-infos {
+    h1 {
+      font-size: $font-size-mobile-h2;
+    }
+
+    .infos-content {
+      flex-direction: column;
+      gap: 3em;
+
+      .img-content {
+        max-width: 15em;
+      }
+    }
+  }
+}
