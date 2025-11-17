@@ -30,7 +30,10 @@ module.exports = (req, res, next) => {
 
     const imageUrls = [];
 
-    if (!req.files?.carousel || req.files.carousel.length === 0) {
+    if (
+      !req.isUpdate &&
+      (!req.files?.carousel || req.files.carousel.length === 0)
+    ) {
       console.warn("Aucune image reçue dans 'carousel'");
       return res
         .status(400)
@@ -38,23 +41,25 @@ module.exports = (req, res, next) => {
     }
 
     try {
-      for (const [index, file] of req.files.carousel.entries()) {
-        const originalName = file.originalname
-          .split(" ")
-          .join("_")
-          .split(".")[0];
-        const filename = `carousel_${originalName}_${Date.now()}_${index}.webp`;
-        const filepath = path.join("images", filename);
+      if (req.files?.carousel && req.files.carousel.length > 0) {
+        for (const [index, file] of req.files.carousel.entries()) {
+          const originalName = file.originalname
+            .split(" ")
+            .join("_")
+            .split(".")[0];
+          const filename = `carousel_${originalName}_${Date.now()}_${index}.webp`;
+          const filepath = path.join("images", filename);
 
-        await sharp(file.buffer)
-          .resize(800, 600)
-          .webp({ quality: 80 })
-          .toFile(filepath);
+          await sharp(file.buffer)
+            .resize(800, 600)
+            .webp({ quality: 80 })
+            .toFile(filepath);
 
-        const imageUrl = `${req.protocol}://${req.get(
-          "host"
-        )}/images/${filename}`;
-        imageUrls.push(imageUrl);
+          const imageUrl = `${req.protocol}://${req.get(
+            "host"
+          )}/images/${filename}`;
+          imageUrls.push(imageUrl);
+        }
       }
 
       req.carouselImageUrls = imageUrls;
