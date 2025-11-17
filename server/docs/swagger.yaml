@@ -91,33 +91,6 @@ components:
           format: date-time
 
 paths:
-  /auth/register:
-    post:
-      summary: Inscrit un nouvel utilisateur
-      tags: [Auth]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - username
-                - email
-                - password
-              properties:
-                username:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-      responses:
-        "201":
-          description: Utilisateur créé
-        "400":
-          description: Erreur de validation
-
   /auth/login:
     post:
       summary: Connecte un utilisateur existant
