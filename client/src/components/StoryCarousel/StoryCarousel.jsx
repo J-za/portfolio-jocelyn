@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import StoryBox from "../StorySlide/StoryBox";
+import StoryBox from "../StoryBox/StoryBox";
 import data from "../../datas/storyData.json";
 import "./storycarousel.scss";
 
