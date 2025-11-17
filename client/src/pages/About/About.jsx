@@ -2,6 +2,7 @@ import myPhoto from "../../assets/me.png";
 import { useRef, useState, useEffect } from "react";
 import StoryCarousel from "../../components/StoryCarousel/StoryCarousel";
 import "./about.scss";
+import SkillsSection from "../../components/SkillsSection/SkillsSection";
 
 function About() {
   return (
@@ -15,6 +16,7 @@ function About() {
           <StoryCarousel />
         </div>
       </section>
+      <SkillsSection />
     </>
   );
 }

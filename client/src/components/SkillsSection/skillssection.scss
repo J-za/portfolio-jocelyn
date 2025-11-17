@@ -1,0 +1,81 @@
+@use "../../styles/variables.scss" as *;
+
+.skills-section {
+  padding: 4em 2em;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: $font-size-dekstop-h2;
+    color: $color-primary;
+    margin-bottom: 1.5em;
+    font-weight: 800;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3em;
+    margin-bottom: 4em;
+
+    button {
+      background: none;
+      border: 2px solid $color-primary;
+      color: black;
+      padding: 0.3em 1.5em;
+      border-radius: 2em;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1em;
+
+      &.active {
+        background-color: $color-primary;
+        color: white;
+        border: 2px solid $color-accent;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // max 4 colonnes
+    gap: 1.2em;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .skills-section {
+    h2 {
+      font-size: $font-size-tablet-h2;
+    }
+
+    .filters {
+      gap: 1em;
+
+      button {
+        font-size: $font-size-tablet-written1;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-section {
+    .filters {
+      button {
+        font-size: 0.8em;
+      }
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); // max 3 colonnes
+    }
+  }
+}
