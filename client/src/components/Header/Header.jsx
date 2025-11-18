@@ -48,7 +48,7 @@ function Header() {
         <NavLink className="nav-link" to="/a-propos" onClick={handleLinkClick}>
           Mon ADN
         </NavLink>
-        <NavLink className="nav-link" to="/about" onClick={handleLinkClick}>
+        <NavLink className="nav-link" to="/projets" onClick={handleLinkClick}>
           Projets
         </NavLink>
         <a className="nav-link" href="/#contact" onClick={handleLinkClick}>

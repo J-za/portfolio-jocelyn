@@ -1,0 +1,68 @@
+@use "../../styles/variables.scss" as *;
+
+.project-card {
+  background-color: $color-primary;
+  border-radius: 1em;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5em;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+  }
+
+  .card-title {
+    font-size: $font-size-dekstop-written1;
+    color: $color-light;
+    margin: 1em 0 0.5em;
+  }
+
+  .tech-logos {
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5em;
+
+    .tech-icon {
+      width: 40px;
+      height: 40px;
+      padding-bottom: 1em;
+
+      svg {
+        width: 100%;
+        height: 100%;
+        fill: $color-light;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .project-card {
+    .card-title {
+      font-size: $font-size-tablet-written1;
+    }
+
+    .tech-logos {
+      .tech-icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
