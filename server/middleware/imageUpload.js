@@ -1,6 +1,7 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+const { saveImage } = require("../utils/imageStorage");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -29,12 +30,12 @@ module.exports = (req, res, next) => {
     }
 
     const imageUrls = [];
+    const publicIds = [];
 
     if (
       !req.isUpdate &&
       (!req.files?.carousel || req.files.carousel.length === 0)
     ) {
-      console.warn("Aucune image reçue dans 'carousel'");
       return res
         .status(400)
         .json({ error: "At least one image is required in request payload" });
@@ -42,27 +43,47 @@ module.exports = (req, res, next) => {
 
     try {
       if (req.files?.carousel && req.files.carousel.length > 0) {
+        const timestamp = Date.now(); //Fixé une seule fois
+
         for (const [index, file] of req.files.carousel.entries()) {
           const originalName = file.originalname
             .split(" ")
             .join("_")
             .split(".")[0];
-          const filename = `carousel_${originalName}_${Date.now()}_${index}.webp`;
-          const filepath = path.join("images", filename);
+          const filename =
+            process.env.IMAGE_STORAGE === "local"
+              ? `carousel_${originalName}_${timestamp}_${index}.webp`
+              : `carousel_${originalName}_${timestamp}_${index}`;
 
-          await sharp(file.buffer)
-            .resize(1920, 1080)
-            .webp({ quality: 80 })
-            .toFile(filepath);
+          if (process.env.IMAGE_STORAGE === "local") {
+            // DEV : Sharp + ./images
+            const filepath = path.join("images", filename);
 
-          const imageUrl = `${req.protocol}://${req.get(
-            "host"
-          )}/images/${filename}`;
-          imageUrls.push(imageUrl);
+            await sharp(file.buffer)
+              .resize(1920, 1080)
+              .webp({ quality: 80 })
+              .toFile(filepath);
+
+            const imageUrl = `${req.protocol}://${req.get(
+              "host"
+            )}/images/${filename}`;
+            imageUrls.push(imageUrl);
+          } else {
+            // PROD : Cloudinary
+            const img = await saveImage(
+              file.buffer,
+              filename,
+              "projects",
+              `${req.protocol}://${req.get("host")}`
+            );
+            imageUrls.push(img.url);
+            publicIds.push(img.publicId);
+          }
         }
       }
 
       req.carouselImageUrls = imageUrls;
+      req.carouselPublicIds = publicIds;
       req.imageCoverUrl = imageUrls[0];
 
       next();

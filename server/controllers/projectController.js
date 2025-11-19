@@ -1,6 +1,7 @@
 const Project = require("../models/Project");
 const fs = require("fs");
 const path = require("path");
+const { deleteImage } = require("../utils/imageStorage");
 
 exports.getAllProjects = async (req, res) => {
   try {
@@ -29,6 +30,7 @@ exports.getOneProject = async (req, res) => {
 exports.createProject = async (req, res) => {
   try {
     const images = req.carouselImageUrls || [];
+    const publicIds = req.carouselPublicIds || [];
 
     if (images.length === 0 || !req.imageCoverUrl) {
       return res
@@ -44,7 +46,9 @@ exports.createProject = async (req, res) => {
       ...req.body,
       owner: req.user.id,
       imageCover: req.imageCoverUrl,
+      imageCoverPublicId: publicIds[0] || null,
       carouselImages: images,
+      carouselPublicIds: publicIds,
     });
 
     await project.save();
@@ -63,7 +67,9 @@ exports.createProject = async (req, res) => {
 exports.updateProject = async (req, res) => {
   try {
     const images = req.carouselImageUrls || [];
+    const publicIds = req.carouselPublicIds || [];
     const imageCover = req.imageCoverUrl || null;
+    const imageCoverPublicId = publicIds[0] || null;
 
     if (req.body._id) {
       delete req.body._id;
@@ -74,33 +80,47 @@ exports.updateProject = async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    // if (project.owner.toString() !== req.user.id) {
-    //   return res.status(403).json({ error: "Forbidden: not your project" });
-    // }
-
-    const deleteImageFile = async (url) => {
-      const filename = url.split("/images/")[1];
-      const filepath = path.join(__dirname, "..", "images", filename);
-      try {
-        await fs.promises.unlink(filepath);
-      } catch (_) {
-        // Fichier introuvable ou déjà supprimé → on ignore
-      }
-    };
-
-    // Si nouvelles images, on supprime les anciennes
+    // --- Suppression des anciennes images ---
     if (images.length > 0 && project.carouselImages?.length > 0) {
-      await Promise.all(project.carouselImages.map(deleteImageFile));
-    }
-
-    if (imageCover && project.imageCover) {
-      await deleteImageFile(project.imageCover);
+      if (process.env.IMAGE_STORAGE === "local") {
+        const deleteImageFile = async (url) => {
+          const filename = url.split("/images/")[1];
+          const filepath = path.join(__dirname, "..", "images", filename);
+          try {
+            await fs.promises.unlink(filepath);
+          } catch (_) {
+            // Fichier introuvable ou déjà supprimé → on ignore
+          }
+        };
+        await Promise.all(project.carouselImages.map(deleteImageFile));
+        if (project.imageCover) {
+          await deleteImageFile(project.imageCover);
+        }
+      } else {
+        // PROD : Cloudinary
+        if (project.carouselPublicIds?.length > 0) {
+          await Promise.all(
+            project.carouselPublicIds.map(async (pid) => {
+              try {
+                await deleteImage(pid);
+              } catch (_) {}
+            })
+          );
+        }
+        if (project.imageCoverPublicId) {
+          try {
+            await deleteImage(project.imageCoverPublicId);
+          } catch (_) {}
+        }
+      }
     }
 
     // Mise à jour des images dans le corps
     if (images.length > 0) {
       req.body.carouselImages = images;
+      req.body.carouselPublicIds = publicIds;
       req.body.imageCover = imageCover;
+      req.body.imageCoverPublicId = imageCoverPublicId;
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
@@ -126,23 +146,38 @@ exports.deleteProject = async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    // if (project.owner.toString() !== req.user.id) {
-    //   return res.status(403).json({ error: "Forbidden: not your project" });
-    // }
+    if (process.env.IMAGE_STORAGE === "local") {
+      // DEV: suppression des fichiers dans ./images
+      const deleteImageFile = async (url) => {
+        const filename = url.split("/images/")[1];
+        const filepath = path.join(__dirname, "..", "images", filename);
+        try {
+          await fs.promises.unlink(filepath);
+        } catch (_) {
+          // Fichier déjà supprimé ou introuvable → on ignore
+        }
+      };
 
-    const deleteImageFile = async (url) => {
-      const filename = url.split("/images/")[1];
-      const filepath = path.join(__dirname, "..", "images", filename);
-      try {
-        await fs.promises.unlink(filepath);
-      } catch (_) {
-        // Fichier déjà supprimé ou introuvable → on ignore
+      if (project.imageCover) await deleteImageFile(project.imageCover);
+      if (project.carouselImages?.length > 0) {
+        await Promise.all(project.carouselImages.map(deleteImageFile));
       }
-    };
-
-    if (project.imageCover) await deleteImageFile(project.imageCover);
-    if (project.carouselImages?.length > 0) {
-      await Promise.all(project.carouselImages.map(deleteImageFile));
+    } else {
+      // PROD: suppression sur Cloudinary via publicIds
+      if (project.imageCoverPublicId) {
+        try {
+          await deleteImage(project.imageCoverPublicId);
+        } catch (_) {}
+      }
+      if (project.carouselPublicIds?.length > 0) {
+        await Promise.all(
+          project.carouselPublicIds.map(async (pid) => {
+            try {
+              await deleteImage(pid);
+            } catch (_) {}
+          })
+        );
+      }
     }
 
     await Project.deleteOne({ _id: req.params.id });
