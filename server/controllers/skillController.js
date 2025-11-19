@@ -1,4 +1,5 @@
 const Skill = require("../models/Skill");
+const { saveImage } = require("../utils/imageStorage");
 const fs = require("fs");
 const path = require("path");
 
@@ -18,16 +19,24 @@ exports.createSkill = async (req, res) => {
     if (req.body._id) delete req.body._id;
 
     if (!req.file) {
-      return res.status(400).json({ error: "Fichier SVG requis" });
+      return res.status(400).json({ error: "SVG file required" });
     }
 
-    const logoUrl = `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`;
+    // Générer un nom unique pour l'image
+    const filename = `logo_${Date.now()}_${req.file.originalname}`;
+
+    // Sauvegarde via le helper (local ou cloudinary)
+    const image = await saveImage(
+      req.file.buffer,
+      filename,
+      "skills",
+      `${req.protocol}://${req.get("host")}`
+    );
 
     const skill = new Skill({
       ...req.body,
-      logoUrl,
+      logoUrl: image.url,
+      logoPublicId: image.publicId,
       owner: req.user.id,
     });
 

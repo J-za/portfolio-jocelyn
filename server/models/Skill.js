@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const SkillSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    logoUrl: { type: String },
+    logoUrl: { type: String }, // chemin local ou URL Cloudinary
+    logoPublicId: { type: String }, // identifiant Cloudinary (null en dev)
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
