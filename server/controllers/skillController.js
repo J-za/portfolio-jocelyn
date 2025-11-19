@@ -23,7 +23,8 @@ exports.createSkill = async (req, res) => {
     }
 
     // Générer un nom unique pour l'image
-    const filename = `logo_${Date.now()}_${req.file.originalname}`;
+    originalName = path.parse(req.file.originalname).name;
+    const filename = `logo_${Date.now()}_${originalName}`;
 
     // Sauvegarde via le helper (local ou cloudinary)
     const image = await saveImage(
