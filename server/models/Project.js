@@ -4,8 +4,10 @@ const projectSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: [{ type: String }],
-    imageCover: { type: String },
+    imageCover: { type: String, required: true },
+    imageCoverPublicId: { type: String },
     carouselImages: [{ type: String }],
+    carouselPublicIds: [{ type: String }],
     techLogos: [{ type: String }],
     tags: [{ type: String }],
     githubLink: { type: String },
