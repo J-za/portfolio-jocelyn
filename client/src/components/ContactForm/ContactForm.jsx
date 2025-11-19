@@ -1,16 +1,33 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import "./contactform.scss";
 
 function ContactForm() {
+  const [status, setStatus] = useState(null);
   const {
     register, //<-- Connecter chaque champ au système de validation
     handleSubmit, //<-- Function qui gère la validation avant d'appeler onSubmit
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Formulaire soumis :", data);
-    //fech vers le backend
+  const onSubmit = async (data) => {
+    try {
+      const res = await fetch("http://localhost:4000/api/send-mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
   };
 
   return (
@@ -76,6 +93,12 @@ function ContactForm() {
         </div>
 
         <button type="submit">Envoyer le message</button>
+        {status === "success" && (
+          <p className="message success">Message envoyé !</p>
+        )}
+        {status === "error" && (
+          <p className="message error">Erreur lors de l'envoi.</p>
+        )}
       </form>
     </>
   );

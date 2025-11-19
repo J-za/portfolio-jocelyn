@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
+const mailRoutes = require("./routes/mailRoutes");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./config/swagger");
@@ -37,6 +38,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/send-mail", mailRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
