@@ -1,5 +1,6 @@
 const Skill = require("../models/Skill");
 const { saveImage } = require("../utils/imageStorage");
+const { deleteImage } = require("../utils/imageStorage");
 const fs = require("fs");
 const path = require("path");
 
@@ -24,7 +25,16 @@ exports.createSkill = async (req, res) => {
 
     // Générer un nom unique pour l'image
     originalName = path.parse(req.file.originalname).name;
-    const filename = `logo_${Date.now()}_${originalName}`;
+    extension = path.extname(req.file.originalname);
+
+    let filename;
+    if (process.env.IMAGE_STORAGE === "local") {
+      // En dev → garder l’extension
+      filename = `logo_${Date.now()}_${originalName}${extension}`;
+    } else {
+      // En prod → pas d’extension
+      filename = `logo_${Date.now()}_${originalName}`;
+    }
 
     // Sauvegarde via le helper (local ou cloudinary)
     const image = await saveImage(
@@ -56,17 +66,50 @@ exports.updateSkill = async (req, res) => {
     if (!skill) return res.status(404).json({ error: "Skill not found" });
 
     if (req.file) {
-      if (skill.logoUrl) {
-        const oldFilename = skill.logoUrl.split("/images/")[1];
-        const oldPath = path.join(__dirname, "..", "images", oldFilename);
-        try {
-          await fs.promises.unlink(oldPath);
-        } catch (_) {}
+      // Supprimer l'ancienne image
+      if (process.env.IMAGE_STORAGE === "local") {
+        if (skill.logoUrl) {
+          const oldFilename = skill.logoUrl.split("/images/")[1];
+          const oldPath = path.join(__dirname, "..", "images", oldFilename);
+          try {
+            await fs.promises.unlink(oldPath);
+          } catch (_) {
+            // on ignore si le fichier n'existe plus
+          }
+        }
+      } else {
+        if (skill.logoPublicId) {
+          try {
+            await deleteImage(skill.logoPublicId);
+          } catch (_) {
+            // on ignore si déjà supprimé
+          }
+        }
       }
 
-      skill.logoUrl = `${req.protocol}://${req.get("host")}/images/${
-        req.file.filename
-      }`;
+      // Générer un nom unique pour l'image
+      originalName = path.parse(req.file.originalname).name;
+      extension = path.extname(req.file.originalname);
+
+      let filename;
+      if (process.env.IMAGE_STORAGE === "local") {
+        // En dev → garder l’extension
+        filename = `logo_${Date.now()}_${originalName}${extension}`;
+      } else {
+        // En prod → pas d’extension
+        filename = `logo_${Date.now()}_${originalName}`;
+      }
+
+      // Sauvegarder la nouvelle image
+      const image = await saveImage(
+        req.file.buffer,
+        filename,
+        "skills",
+        `${req.protocol}://${req.get("host")}`
+      );
+
+      skill.logoUrl = image.url;
+      skill.logoPublicId = image.publicId;
     }
 
     Object.assign(skill, req.body);
@@ -84,12 +127,25 @@ exports.deleteSkill = async (req, res) => {
     const skill = await Skill.findById(req.params.id);
     if (!skill) return res.status(404).json({ error: "Skill not found" });
 
-    if (skill.logoUrl) {
-      const filename = skill.logoUrl.split("/images/")[1];
-      const filepath = path.join(__dirname, "..", "images", filename);
-      try {
-        await fs.promises.unlink(filepath);
-      } catch (_) {}
+    // Supprimer l'image associée
+    if (process.env.IMAGE_STORAGE === "local") {
+      if (skill.logoUrl) {
+        const filename = skill.logoUrl.split("/images/")[1];
+        const filepath = path.join(__dirname, "..", "images", filename);
+        try {
+          await fs.promises.unlink(filepath);
+        } catch (_) {
+          // on ignore si le fichier n'existe plus
+        }
+      }
+    } else {
+      if (skill.logoPublicId) {
+        try {
+          await deleteImage(skill.logoPublicId);
+        } catch (_) {
+          // on ignore si déjà supprimé
+        }
+      }
     }
 
     await skill.deleteOne();
