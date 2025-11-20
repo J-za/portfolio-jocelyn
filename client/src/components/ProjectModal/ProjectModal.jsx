@@ -51,7 +51,7 @@ function ProjectModal({ isOpen, onClose, project }) {
   );
 
   const CloseButton = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24">
+    <svg width="25" height="25" viewBox="0 0 24 24">
       <line x1="4" y1="4" x2="20" y2="20" stroke="black" strokeWidth="2" />
       <line x1="20" y1="4" x2="4" y2="20" stroke="black" strokeWidth="2" />
     </svg>
@@ -129,7 +129,7 @@ function ProjectModal({ isOpen, onClose, project }) {
             if (demoLink) {
               window.open(demoLink, "_blank");
             } else {
-              setPopup("Le site n’est pas en production pour l’instant 🚧");
+              setPopup("Le site n’est pas en production pour l’instant");
             }
           }}
         >
@@ -141,10 +141,11 @@ function ProjectModal({ isOpen, onClose, project }) {
             <p>{popup}</p>
             <button
               type="button"
-              className="btn close-popup"
+              className="close-popup"
               onClick={() => setPopup(null)}
+              aria-label="Fermer"
             >
-              Fermer
+              ✕
             </button>
           </div>
         )}

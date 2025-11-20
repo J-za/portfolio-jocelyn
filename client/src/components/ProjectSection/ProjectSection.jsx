@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProjectCard from "../ProjectCard/ProjectCard";
 import ProjectModal from "../ProjectModal/ProjectModal";
+import IconFilter from "../../assets/mi_filter.svg?react";
 import "./projectsection.scss";
 import { API_URL } from "../../config/api";
 
@@ -48,6 +49,9 @@ function ProjectSection() {
       {error && <p className="error-message">{error}</p>}
 
       <p className="filters-title"> Trouvez les projets qui vous ressemble</p>
+
+      <IconFilter className="filter-icon" />
+
       <div className="filters">
         {allTags.map((tag) => (
           <button
@@ -68,13 +72,19 @@ function ProjectSection() {
       </div>
 
       <div className="projects-grid">
-        {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project._id}
-            project={project}
-            onClick={() => setSelectedProject(project)}
-          />
-        ))}
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((project) => (
+            <ProjectCard
+              key={project._id}
+              project={project}
+              onClick={() => setSelectedProject(project)}
+            />
+          ))
+        ) : (
+          <p className="no-projects">
+            Aucun projet réalisé avec l’ensemble des technologies sélectionnées.
+          </p>
+        )}
       </div>
 
       {selectedProject && (
