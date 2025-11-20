@@ -60,7 +60,7 @@ module.exports = (req, res, next) => {
             const filepath = path.join("images", filename);
 
             await sharp(file.buffer)
-              .resize(800, 600)
+              .resize(1920, 1080)
               .webp({ quality: 80 })
               .toFile(filepath);
 
@@ -70,8 +70,13 @@ module.exports = (req, res, next) => {
             imageUrls.push(imageUrl);
           } else {
             // PROD : Cloudinary
+            const optimizedBuffer = await sharp(file.buffer)
+              .resize(1920, 1080)
+              .webp({ quality: 80 })
+              .toBuffer();
+
             const img = await saveImage(
-              file.buffer,
+              optimizedBuffer,
               filename,
               "projects",
               `${req.protocol}://${req.get("host")}`
