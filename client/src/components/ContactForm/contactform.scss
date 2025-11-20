@@ -20,13 +20,11 @@ h2 {
   width: 100%;
 
   .error {
-    display: block; // occupe toute la largeur sous l’input
-    margin-top: 0.25rem; // petit espace avec l’input
-    font-size: 0.85rem; // légèrement plus petit que le texte normal
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    color: #d9534f; // rouge accessible (Bootstrap-like)
-
-    // Accessibilité visuelle
+    color: #d9534f;
     line-height: 1.4;
   }
 
@@ -61,6 +59,7 @@ h2 {
       font-size: 1em;
       resize: vertical;
       min-height: 100px;
+      font-family: $main-police;
     }
 
     input::placeholder,
@@ -88,14 +87,14 @@ h2 {
     }
   }
 
-  .success {
+  .send-success {
     text-align: center;
-    color: green;
+    color: $color-light;
     margin-top: 10px;
   }
-  .error {
+  .send-error {
     text-align: center;
-    color: red;
+    color: #d9534f;
     margin-top: 10px;
   }
 }

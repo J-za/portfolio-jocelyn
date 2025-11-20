@@ -8,6 +8,7 @@ function ContactForm() {
   const {
     register, //<-- Connecter chaque champ au système de validation
     handleSubmit, //<-- Function qui gère la validation avant d'appeler onSubmit
+    reset, // <-- Vide le formulaire
     formState: { errors },
   } = useForm();
 
@@ -22,6 +23,7 @@ function ContactForm() {
       const result = await res.json();
       if (result.success) {
         setStatus("success");
+        reset(); //<-- vide tous les champs
       } else {
         setStatus("error");
       }
@@ -95,10 +97,10 @@ function ContactForm() {
 
         <button type="submit">Envoyer le message</button>
         {status === "success" && (
-          <p className="message success">Message envoyé !</p>
+          <p className="message send-success">Message envoyé !</p>
         )}
         {status === "error" && (
-          <p className="message error">Erreur lors de l'envoi.</p>
+          <p className="message send-error">Erreur lors de l'envoi.</p>
         )}
       </form>
     </>
