@@ -29,24 +29,39 @@ function HighlightCarousel() {
   );
 
   const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % data.length);
+    const newIndex = (activeIndex + 1) % data.length;
+    setActiveIndex(newIndex);
+    sliderRef.current.children[newIndex].scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest", //<-- empêche le scroll vertical
+    });
   };
 
   const goToPrevious = () => {
-    setActiveIndex((prev) => (prev - 1 + data.length) % data.length);
+    const newIndex = (activeIndex - 1 + data.length) % data.length;
+    setActiveIndex(newIndex);
+    sliderRef.current.children[newIndex].scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest", //<-- empêche le scroll vertical
+    });
   };
 
+  //écoute le scroll natif pour mettre à jour l’index
   useEffect(() => {
     const slider = sliderRef.current;
-    const card = slider.children[activeIndex];
-    if (card) {
-      card.scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "nearest", //<-- empêche le scroll vertical
-      });
-    }
-  }, [activeIndex]);
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft;
+      const width = slider.offsetWidth;
+      const index = Math.round(scrollLeft / width);
+      setActiveIndex(index); // met à jour l’index en fonction du scroll
+    };
+
+    slider.addEventListener("scroll", handleScroll);
+    return () => slider.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="highlight-carousel">
@@ -77,7 +92,14 @@ function HighlightCarousel() {
           <span
             key={i}
             className={`dot ${i === activeIndex ? "active" : ""}`}
-            onClick={() => setActiveIndex(i)}
+            onClick={() => {
+              setActiveIndex(i);
+              sliderRef.current.children[i].scrollIntoView({
+                behavior: "smooth",
+                inline: "start",
+                block: "nearest",
+              });
+            }}
           ></span>
         ))}
       </div>

@@ -7,17 +7,32 @@ function StoryCarousel() {
   const sliderRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // fonction pour scroller vers une slide précise (clic sur bullet)
+  const scrollToIndex = (i) => {
+    const slider = sliderRef.current;
+    const card = slider.children[i];
+    if (!card) return;
+    card.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+  };
+
+  // écoute le scroll natif pour mettre à jour l’index
   useEffect(() => {
     const slider = sliderRef.current;
-    const card = slider.children[activeIndex];
-    if (card) {
-      card.scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "nearest", // évite le scroll vertical
-      });
-    }
-  }, [activeIndex]);
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft;
+      const width = slider.offsetWidth;
+      const index = Math.round(scrollLeft / width);
+      setActiveIndex(index);
+    };
+
+    slider.addEventListener("scroll", handleScroll, { passive: true });
+    return () => slider.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="story-carousel">
@@ -39,7 +54,10 @@ function StoryCarousel() {
             <span
               key={i}
               className={`dot ${i === activeIndex ? "active" : ""}`}
-              onClick={() => setActiveIndex(i)}
+              onClick={() => {
+                setActiveIndex(i);
+                scrollToIndex(i);
+              }}
             ></span>
           ))}
         </div>

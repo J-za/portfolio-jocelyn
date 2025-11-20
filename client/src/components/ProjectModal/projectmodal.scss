@@ -24,6 +24,7 @@
   overflow-y: auto;
   max-height: 85vh;
   font-family: $main-police;
+  touch-action: pan-y; /* autorise le swipe horizontal */
 
   h2 {
     font-size: $font-size-dekstop-written1;
@@ -51,6 +52,7 @@
     gap: 1rem;
     overflow: hidden;
     margin-bottom: 1.5rem;
+    pointer-events: auto;
 
     img {
       height: 100%;

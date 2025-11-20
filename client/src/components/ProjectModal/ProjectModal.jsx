@@ -10,6 +10,7 @@ function ProjectModal({ isOpen, onClose, project }) {
     project;
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null); //--> swipe mobile
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -21,6 +22,18 @@ function ProjectModal({ isOpen, onClose, project }) {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? carouselImages.length - 1 : prevIndex - 1
     );
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchStartX - touchEndX;
+
+    if (deltaX > 50) nextSlide(); // swipe gauche
+    else if (deltaX < -50) prevSlide(); // swipe droite
   };
 
   const ChevronLeft = () => (
@@ -65,7 +78,11 @@ function ProjectModal({ isOpen, onClose, project }) {
         ))}
       </div>
 
-      <div className="carousel">
+      <div
+        className="carousel"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <button className="chevron left" onClick={prevSlide}>
           <ChevronLeft />
         </button>
