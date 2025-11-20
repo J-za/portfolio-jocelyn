@@ -1,19 +1,21 @@
-const transporter = require("../config/mail");
+const sgMail = require("../config/mail");
 
 exports.sendMail = async (req, res) => {
   const { name, email, message } = req.body;
 
-  try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.MAIL_TO,
-      subject: `Nouveau message de ${name}`,
-      text: `Email: ${email}\n\nMessage:\n${message}`,
-    });
+  const msg = {
+    to: "jzarrouk@outlook.com", // destinataire
+    from: "notification.portfolio.jza@gmail.com", // expéditeur validé dans SendGrid
+    subject,
+    text: message,
+    replyTo: email,
+  };
 
-    res.json({ success: true, message: "Email sent successfully !" });
-  } catch (err) {
-    console.error("Email sending error :", err);
-    res.status(500).json({ success: false, message: "Internal error" });
+  try {
+    await sgMail.send(msg);
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
