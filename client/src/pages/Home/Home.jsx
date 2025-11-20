@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import HighlightCarousel from "../../components/HighlightCarousel/HighlightCarousel";
 import HighlightGrid from "../../components/HighlightGrid.jsx/HighlightGrid";
@@ -18,6 +18,7 @@ const iconMap = {
 function Home() {
   const location = useLocation();
   const isMobileOrTablet = useIsMobileOrTablet();
+  const navigate = useNavigate();
 
   //Permet de gérer le lien vers contact depuis une autre page
   useEffect(() => {
@@ -41,7 +42,7 @@ function Home() {
           <strong>expérience utilisateur fluide et intuitive</strong>
         </h2>
         <div className="button-content">
-          <button>Mes projets</button>
+          <button onClick={() => navigate("/projets")}>Mes projets</button>
           <button
             className="hero-button"
             onClick={() => {
