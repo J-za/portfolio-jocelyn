@@ -6,7 +6,7 @@ exports.sendMail = async (req, res) => {
   const msg = {
     to: "jzarrouk@outlook.com", // destinataire
     from: "notification.portfolio.jza@gmail.com", // expéditeur validé dans SendGrid
-    subject,
+    subject: `Nouveau message de ${name}`,
     text: message,
     replyTo: email,
   };
