@@ -12,6 +12,8 @@ function ProjectModal({ isOpen, onClose, project }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null); //--> swipe mobile
 
+  const [popup, setPopup] = useState(null);
+
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
@@ -112,22 +114,40 @@ function ProjectModal({ isOpen, onClose, project }) {
       </div>
 
       <div className="links">
-        <a
-          href={githubLink}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
           className="btn github"
+          onClick={() => window.open(githubLink, "_blank")}
         >
           GitHub
-        </a>
-        <a
-          href={demoLink}
-          target="_blank"
-          rel="noopener noreferrer"
+        </button>
+
+        <button
+          type="button"
           className="btn demo"
+          onClick={() => {
+            if (demoLink) {
+              window.open(demoLink, "_blank");
+            } else {
+              setPopup("Le site n’est pas en production pour l’instant 🚧");
+            }
+          }}
         >
-          Démo
-        </a>
+          Site
+        </button>
+
+        {popup && (
+          <div className="mini-popup">
+            <p>{popup}</p>
+            <button
+              type="button"
+              className="btn close-popup"
+              onClick={() => setPopup(null)}
+            >
+              Fermer
+            </button>
+          </div>
+        )}
       </div>
     </Modal>
   );
