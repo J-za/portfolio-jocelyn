@@ -80,7 +80,7 @@ function ProjectModal({ isOpen, onClose, project }) {
 
       <h2>{title}</h2>
       <div className="description">
-        {project.description.map((para, i) => (
+        {description.map((para, i) => (
           <p key={i}>{para}</p>
         ))}
       </div>
