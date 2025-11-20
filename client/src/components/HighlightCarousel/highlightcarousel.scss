@@ -44,7 +44,7 @@
       align-items: center;
       scroll-snap-align: center;
       box-sizing: border-box;
-      padding: 2em 1em;
+      padding: 0 2em 1em;
 
       .highlight-inner {
         max-width: 320px;
@@ -145,6 +145,7 @@
     .highlight-slider {
       .highlight-card {
         .highlight-inner {
+          align-items: center;
           h3 {
             margin: 0;
             color: $color-primary;
@@ -153,6 +154,7 @@
           }
 
           p {
+            text-align: center;
             margin: 0;
             font-size: $font-size-mobile-written1;
             font-weight: 400;

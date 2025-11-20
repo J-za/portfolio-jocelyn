@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SkillCard from "../SkillCard/SkillCard";
 import "./skillssection.scss";
+import { API_URL } from "../../config/api";
 
 function SkillsSection() {
   const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ function SkillsSection() {
     const fetchData = async () => {
       try {
         //Récupération des catégories
-        const catRes = await fetch("http://localhost:4000/api/categories");
+        const catRes = await fetch(`${API_URL}/categories`);
         if (!catRes.ok) {
           throw new Error(`Categories HTTP error: ${catRes.status}`);
         }
@@ -20,7 +21,7 @@ function SkillsSection() {
         setCategories([{ _id: "tous", name: "Tous" }, ...catData]);
 
         //Récupération des skills
-        const skillRes = await fetch("http://localhost:4000/api/skills");
+        const skillRes = await fetch(`${API_URL}/skills`);
         if (!skillRes.ok) {
           throw new Error(`Skills HTTP erro: ${skillRes.status}`);
         }

@@ -29,11 +29,11 @@
       cursor: pointer;
       transition: 0.3s;
       font-size: 1em;
+      font-weight: 600;
 
       &.active {
         background-color: $color-primary;
-        color: white;
-        border: 2px solid $color-accent;
+        color: $color-accent;
       }
 
       &:hover {
@@ -68,9 +68,14 @@
 
 @media (max-width: 768px) {
   .skills-section {
+    padding: 2em 1em;
+
+    h2 {
+      margin-bottom: 3em;
+    }
     .filters {
       button {
-        font-size: 0.8em;
+        font-size: $font-size-mobile-written2;
       }
     }
     .skills-grid {

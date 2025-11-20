@@ -11,6 +11,7 @@
   align-items: center;
   text-align: center;
   padding: 1.5em;
+  padding-bottom: 1em;
 
   &:hover {
     transform: translateY(-5px);
@@ -28,7 +29,7 @@
   .card-title {
     font-size: $font-size-dekstop-written1;
     color: $color-light;
-    margin: 1em 0 0.5em;
+    margin: 1em 0 1em;
   }
 
   .tech-logos {
@@ -55,13 +56,13 @@
 @media (max-width: 1024px) {
   .project-card {
     .card-title {
-      font-size: $font-size-tablet-written1;
+      font-size: $font-size-tablet-h2;
     }
 
     .tech-logos {
       .tech-icon {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
       }
     }
   }

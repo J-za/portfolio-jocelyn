@@ -24,9 +24,13 @@
 
   h2 {
     color: $color-light;
-    font-size: $font-size-dekstop-written1;
+    font-size: $font-size-dekstop-written2;
     text-align: center;
     margin: 0 0 2em 0;
+
+    strong {
+      font-weight: 800;
+    }
   }
 
   .button-content {
@@ -35,9 +39,10 @@
     margin-bottom: 2em;
     button {
       all: unset;
+      cursor: pointer;
       background-color: $color-light;
       border-radius: 0.625em;
-      padding: 0.5em 2em;
+      padding: 0.5em 1.5em;
       font-weight: 800;
       font-size: $font-size-dekstop-written2;
       transition: transform 0.3s ease;
@@ -53,7 +58,7 @@
   display: flex;
   justify-content: center;
   gap: 1em;
-  margin: 4em 4em;
+  margin: 0 4em;
 }
 
 .form-content {
@@ -78,6 +83,7 @@
 
     .button-content {
       button {
+        text-align: center;
         font-size: $font-size-tablet-written1;
       }
     }
@@ -90,22 +96,31 @@
 
 @media (max-width: 768px) {
   .hero-content {
-    padding: 5em 1.5em 3em 1.5em;
+    padding: 4.5em 1em 2em 1em;
+    gap: 2em;
     h1 {
       font-size: $fontsize-mobile-h1;
     }
 
     h2 {
-      font-size: $font-size-mobile-h2;
+      font-size: $font-size-mobile-written1;
       margin: 0;
+      line-height: 1.4em;
     }
 
     .button-content {
       flex-direction: column;
       gap: 2em;
+      margin-bottom: 1em;
+      margin-top: 1em;
       button {
         font-size: $font-size-mobile-written2;
+        padding: 0.5em 1em;
       }
     }
+  }
+
+  .form-content {
+    padding: 2em 1em;
   }
 }

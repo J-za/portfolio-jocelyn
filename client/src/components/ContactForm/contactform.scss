@@ -101,18 +101,20 @@ h2 {
 }
 
 @media (max-width: 1024px) {
-  h2 {
-    font-size: 2em;
+  .form-title {
+    font-size: $font-size-tablet-h2;
   }
 }
 
 @media (max-width: 768px) {
-  h2 {
-    font-size: 1.4em;
+  .form-title {
+    font-size: $font-size-mobile-h2;
+    line-height: 1.7em;
+    padding-bottom: 1em;
   }
   .contact-form {
     button {
-      font-size: 0.938em;
+      font-size: $font-size-mobile-written2;
     }
   }
 }

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import "./contactform.scss";
+import { API_URL } from "../../config/api";
 
 function ContactForm() {
   const [status, setStatus] = useState(null);
@@ -12,7 +13,7 @@ function ContactForm() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:4000/api/send-mail", {
+      const res = await fetch(`${API_URL}/send-mail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -32,7 +33,7 @@ function ContactForm() {
 
   return (
     <>
-      <h2>
+      <h2 className="form-title">
         Mes projets vous intéressent ? <br />
         <span className="accent">Contactez-moi</span>
       </h2>

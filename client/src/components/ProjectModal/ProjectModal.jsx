@@ -55,6 +55,16 @@ function ProjectModal({ isOpen, onClose, project }) {
         <CloseButton />
       </button>
 
+      <h2>{title}</h2>
+
+      <div className="tags">
+        {tags.map((tag, i) => (
+          <span key={i} className="tag">
+            {tag}
+          </span>
+        ))}
+      </div>
+
       <div className="carousel">
         <button className="chevron left" onClick={prevSlide}>
           <ChevronLeft />
@@ -78,18 +88,9 @@ function ProjectModal({ isOpen, onClose, project }) {
         ))}
       </div>
 
-      <h2>{title}</h2>
       <div className="description">
         {description.map((para, i) => (
           <p key={i}>{para}</p>
-        ))}
-      </div>
-
-      <div className="tags">
-        {tags.map((tag, i) => (
-          <span key={i} className="tag">
-            {tag}
-          </span>
         ))}
       </div>
 
