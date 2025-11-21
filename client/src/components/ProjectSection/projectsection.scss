@@ -47,6 +47,10 @@
       font-size: 0.9em;
       font-weight: 600;
 
+      &:hover {
+        transform: scale(1.05);
+      }
+
       &.active {
         background-color: $color-primary;
         color: $color-accent;

@@ -37,8 +37,9 @@ function Home() {
           Développeur Web <br /> <span className="accent">Full-Stack</span>
         </h1>
         <h2>
-          Je développe des <strong>applications web modernes</strong>,
-          performantes et élégantes, pensées pour offrir une{" "}
+          Je développe des{" "}
+          <strong>applications web modernes et performantes</strong>, pensées
+          pour offrir une{" "}
           <strong>expérience utilisateur fluide et intuitive</strong>
         </h2>
         <div className="button-content">

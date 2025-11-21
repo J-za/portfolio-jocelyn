@@ -85,7 +85,8 @@ function ProjectSection() {
           ))
         ) : (
           <p className="no-projects">
-            Aucun projet réalisé avec l’ensemble des technologies sélectionnées.
+            Aucun projet n'a été réalisé avec l’ensemble des technologies
+            sélectionnées à ce jour.
           </p>
         )}
       </div>
