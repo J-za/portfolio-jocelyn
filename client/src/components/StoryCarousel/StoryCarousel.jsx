@@ -43,8 +43,8 @@ function StoryCarousel() {
               <StoryBox
                 title={item.title}
                 intro={item.intro}
+                paragraphe={item.paragraphe}
                 points={item.points}
-                conclusion={item.conclusion}
               />
             </div>
           ))}

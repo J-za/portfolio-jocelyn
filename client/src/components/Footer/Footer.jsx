@@ -30,14 +30,11 @@ function Footer() {
           <LinkedInIcon className="icon" />
         </a>
       </div>
+      <p onClick={handleMentionsClick} className="mention">
+        MENTIONS LÉGALES
+      </p>
       <p>
-        © {new Date().getFullYear()} Portfolio Jocelyn -{" "}
-        <span
-          onClick={handleMentionsClick}
-          style={{ cursor: "pointer", textDecoration: "underline" }}
-        >
-          Mentions légales & RGPD
-        </span>
+        Portfolio Jocelyn © - Tous droits réservés - {new Date().getFullYear()}{" "}
       </p>
     </footer>
   );

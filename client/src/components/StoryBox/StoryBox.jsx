@@ -1,16 +1,27 @@
 import "./storybox.scss";
 
-function StoryBox({ title, intro, points, conclusion }) {
+function StoryBox({ title, intro, paragraphe, points }) {
   return (
     <article className="story-box">
       <h2>{title}</h2>
       <p className="intro">{intro}</p>
+      <p className="intro">{paragraphe}</p>
       <ul className="points">
-        {points.map((points, i) => (
-          <li key={i}>{points}</li>
-        ))}
+        {points.map((point, i) => {
+          const match = point.match(/^(.*?)\((.*?)\)$/); // <-- Regex pour capturer le texte entre parenthèses
+          return (
+            <li key={i}>
+              {match ? (
+                <>
+                  {match[1]} <em>({match[2]})</em>
+                </>
+              ) : (
+                point
+              )}
+            </li>
+          );
+        })}
       </ul>
-      <p className="conclusion">{conclusion}</p>
     </article>
   );
 }
