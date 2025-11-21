@@ -31,7 +31,7 @@ function Footer() {
         </a>
       </div>
       <p>
-        © {import.meta.env.VITE_LAST_UPDATE} Portfolio Jocelyn -{" "}
+        © {new Date().getFullYear()} Portfolio Jocelyn -{" "}
         <span
           onClick={handleMentionsClick}
           style={{ cursor: "pointer", textDecoration: "underline" }}
