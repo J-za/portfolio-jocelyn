@@ -32,7 +32,7 @@ header {
   .burger {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
@@ -46,13 +46,13 @@ header {
     }
 
     &.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+      transform: rotate(45deg) translate(6px, 6px);
     }
     &.active span:nth-child(2) {
       opacity: 0;
     }
     &.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
+      transform: rotate(-45deg) translate(6px, -6px);
     }
   }
 }

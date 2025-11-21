@@ -148,7 +148,7 @@
       right: 20px;
       background: #333;
       color: #fff;
-      padding: 12px 16px;
+      padding: 12px 30px;
       border-radius: 6px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.3s ease;
@@ -161,8 +161,8 @@
 
     .close-popup {
       position: absolute;
-      top: 4px;
-      left: 8px;
+      top: 6.5px;
+      left: 4px;
       background: transparent;
       color: #fff;
       border: none;
@@ -267,6 +267,20 @@
         font-size: 0.85rem;
         padding: 10px 12px;
       }
+    }
+
+    .mini-popup {
+      padding: 12px 16px;
+    }
+
+    .mini-popup p {
+      margin: 0;
+      text-align: center;
+    }
+
+    .close-popup {
+      top: 4px;
+      left: 8px;
     }
   }
 }
