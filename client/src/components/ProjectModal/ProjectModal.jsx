@@ -66,7 +66,11 @@ function ProjectModal({ isOpen, onClose, project }) {
       className="project-modal"
       overlayClassName="modal-overlay"
     >
-      <button className="close-btn" onClick={onClose}>
+      <button
+        className="close-btn"
+        onClick={onClose}
+        aria-label="Fermer la modale"
+      >
         <CloseButton />
       </button>
 
@@ -85,14 +89,22 @@ function ProjectModal({ isOpen, onClose, project }) {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <button className="chevron left" onClick={prevSlide}>
+        <button
+          className="chevron left"
+          onClick={prevSlide}
+          aria-label="Précédent"
+        >
           <ChevronLeft />
         </button>
         <img
           src={carouselImages[currentIndex]}
           alt={`Screenshot ${currentIndex + 1}`}
         />
-        <button className="chevron right" onClick={nextSlide}>
+        <button
+          className="chevron right"
+          onClick={nextSlide}
+          aria-label="Suivant"
+        >
           <ChevronRight />
         </button>
       </div>

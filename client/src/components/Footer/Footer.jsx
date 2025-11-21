@@ -30,9 +30,9 @@ function Footer() {
           <LinkedInIcon className="icon" />
         </a>
       </div>
-      <p onClick={handleMentionsClick} className="mention">
+      <button onClick={handleMentionsClick} className="mention">
         MENTIONS LÉGALES
-      </p>
+      </button>
       <p>
         Portfolio Jocelyn © - Tous droits réservés - {new Date().getFullYear()}{" "}
       </p>

@@ -41,14 +41,17 @@ function ProjectSection() {
 
   return (
     <section className="projects-section">
-      <h2 className="section-title">
+      <h1 className="section-title">
         Plongez dans <strong>mon univers</strong> et découvrez{" "}
         <strong>mes créations</strong>
-      </h2>
+      </h1>
 
       {error && <p className="error-message">{error}</p>}
 
-      <p className="filters-title"> Trouvez les projets qui vous ressemble</p>
+      <h2 className="filters-title">
+        {" "}
+        Trouvez les projets qui vous ressemblent
+      </h2>
 
       <IconFilter className="filter-icon" />
 

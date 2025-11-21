@@ -47,6 +47,10 @@
       font-size: $font-size-dekstop-written2;
       transition: transform 0.3s ease;
 
+      &:focus {
+        outline: auto;
+      }
+
       &:hover {
         transform: scale(1.06);
       }

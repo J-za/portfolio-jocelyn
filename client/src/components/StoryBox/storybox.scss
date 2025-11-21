@@ -2,6 +2,7 @@
 
 .story-box {
   margin: auto;
+  margin-top: 1em;
   padding: 0 2em;
   background-color: $color-primary;
   text-align: left;
@@ -67,5 +68,11 @@
     .conclusion {
       font-size: $font-size-mobile-written1;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .story-box {
+    padding: 0;
   }
 }

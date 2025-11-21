@@ -39,7 +39,7 @@
     font-size: 1.1em;
     color: #333;
     margin-bottom: 1.5rem;
-    text-align: justify;
+    text-align: left;
     line-height: 1.5;
     white-space: pre-line;
   }
@@ -136,6 +136,10 @@
       cursor: pointer;
       font-weight: 800;
       transition: transform 0.3s ease;
+
+      &:focus {
+        outline: auto;
+      }
 
       &:hover {
         transform: scale(1.06);

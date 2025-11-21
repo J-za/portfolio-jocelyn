@@ -5,7 +5,7 @@ function ProjectCard({ project, onClick }) {
   const { title, imageCover, techLogos } = project;
 
   return (
-    <div className="project-card" onClick={onClick}>
+    <div className="project-card" tabIndex="0" onClick={onClick}>
       <img src={imageCover} alt={title} className="cover" />
       <h2 className="card-title">{title}</h2>
       <div className="tech-logos">
