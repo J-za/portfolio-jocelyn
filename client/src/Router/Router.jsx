@@ -3,6 +3,7 @@ import Home from "../pages/Home/Home";
 import Layout from "../components/Layout/Layout";
 import About from "../pages/About/About";
 import Project from "../pages/Project/Project";
+import Mentions from "../pages/Mentions/Mentions";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 function Router() {
@@ -13,6 +14,7 @@ function Router() {
           <Route path="/" element={<Home />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/projets" element={<Project />} />
+          <Route path="/mentions" element={<Mentions />} />
         </Route>
       </Routes>
     </ScrollToTop>
