@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Bloquer l’accès aux routes backend
+Disallow: /api/
