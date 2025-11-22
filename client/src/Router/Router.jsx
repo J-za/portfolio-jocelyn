@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import About from "../pages/About/About";
 import Project from "../pages/Project/Project";
 import Mentions from "../pages/Mentions/Mentions";
+import Error from "../pages/Error/Error";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
           <Route path="/a-propos" element={<About />} />
           <Route path="/projets" element={<Project />} />
           <Route path="/mentions" element={<Mentions />} />
+          <Route path="*" element={<Error />} />
         </Route>
       </Routes>
     </ScrollToTop>
