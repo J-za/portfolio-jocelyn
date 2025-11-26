@@ -82,3 +82,11 @@ header {
     }
   }
 }
+
+// Patch spécifique Safari iOS
+@supports (-webkit-touch-callout: none) {
+  header {
+    position: sticky;
+    top: 0;
+  }
+}

@@ -13,9 +13,9 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY.current) {
-        controls.start({ opacity: 0 });
+        controls.start({ y: -100 });
       } else {
-        controls.start({ opacity: 1 });
+        controls.start({ y: 0 });
       }
       lastScrollY.current = window.scrollY;
 
@@ -37,9 +37,9 @@ function Header() {
 
   return (
     <motion.header
-      initial={{ opacity: 1 }}
+      initial={{ y: 0 }}
       animate={controls}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.3 }}
     >
       <nav id="main-navigation" className={`nav-links ${isOpen ? "open" : ""}`}>
         <NavLink className="nav-link" to="/" onClick={handleLinkClick}>
