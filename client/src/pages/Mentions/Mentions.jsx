@@ -52,7 +52,7 @@ function Mentions() {
 
       <section>
         <h2>Dernière mise à jour</h2>
-        <p>{new Date().toLocaleDateString("fr-FR")}</p>
+        <p>{import.meta.env.VITE_LAST_UPDATE}</p>
       </section>
     </div>
   );
