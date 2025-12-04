@@ -2,11 +2,10 @@
 
 header {
   position: fixed;
-  top: env(safe-area-inset-top);
+  top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding-top: env(safe-area-inset-top);
 
   display: flex;
   align-items: center;
@@ -55,6 +54,14 @@ header {
     &.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
     }
+  }
+}
+
+/* iOS-specific: bascule en sticky pour éviter les sauts au scroll */
+@supports (-webkit-touch-callout: none) {
+  header {
+    position: sticky;
+    top: 0;
   }
 }
 
