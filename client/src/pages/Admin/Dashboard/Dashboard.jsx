@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Dashboard.scss";
+import "./dashboard.scss";
 import { API_URL } from "../../../config/api";
 
 function Dashboard() {
