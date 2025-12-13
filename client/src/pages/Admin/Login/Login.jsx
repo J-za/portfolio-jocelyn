@@ -1,7 +1,7 @@
 // pages/Admin/Login.jsx
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import "./Login.scss";
+import "./login.scss";
 import { API_URL } from "../../../config/api";
 
 function Login() {

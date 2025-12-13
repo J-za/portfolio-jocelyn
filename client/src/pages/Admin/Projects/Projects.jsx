@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { API_URL } from "../../../config/api";
-import "./Projects.scss";
+import "./projects.scss";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
