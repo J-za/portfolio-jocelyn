@@ -1,0 +1,94 @@
+.admin-layout {
+  display: flex;
+  height: 100vh;
+
+  .burger {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: #0077cc;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .sidebar {
+    width: 220px;
+    background: #343a40;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      a {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    button {
+      margin-top: auto;
+      padding: 0.5rem 1rem;
+      background: #6c757d;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+        background: #5a6268;
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding: 1rem;
+    background: #f8f9fa;
+    overflow-y: auto;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-layout {
+    .burger {
+      display: block;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .content {
+      padding-top: 3rem; // pour laisser la place au bouton burger
+    }
+  }
+}
