@@ -1,6 +1,6 @@
 import { Navigate, Outlet, Link, useNavigate } from "react-router";
 import { useState } from "react";
-import "./AdminLayout.scss";
+import "./adminlayout.scss";
 
 function AdminLayout() {
   const token = sessionStorage.getItem("token");
