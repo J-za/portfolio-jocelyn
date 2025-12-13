@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import "./Skills.scss";
+import "./skills.scss";
 import { API_URL } from "../../../config/api";
 
 function Skills() {

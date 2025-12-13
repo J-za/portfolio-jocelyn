@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import "./Categories.scss";
+import "./categories.scss";
 import { API_URL } from "../../../config/api";
 
 function Categories() {
