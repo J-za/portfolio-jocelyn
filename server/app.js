@@ -24,7 +24,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://portfolio-jocelyn.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://portfolio-jocelyn.vercel.app",
+      "https://portfolio-jocelyn-git-staging-jzas-projects.vercel.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: [
       "Origin",
